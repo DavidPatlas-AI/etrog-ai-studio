@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>סטודיו אתרוגים AI</title>
+  <style>
+    :root {
+      --bg: #fff8e7;
+      --card: #ffffff;
+      --text: #1f2933;
+      --muted: #667085;
+      --primary: #f5a623;
+      --primary-dark: #c97c00;
+      --green: #4f8f3a;
+      --border: #eadfc4;
+      --shadow: 0 14px 35px rgba(90, 62, 15, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(245, 166, 35, 0.22), transparent 32%),
+        linear-gradient(135deg, #fff8e7 0%, #fffdf6 45%, #f3f8e9 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .container {
+      width: min(1120px, 92%);
+      margin: auto;
+      padding: 32px 0 56px;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 28px;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .hero {
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 34px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff2c8;
+      color: #7a4d00;
+      border: 1px solid #f5d684;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.05;
+      letter-spacing: -1px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.75;
+      max-width: 720px;
+      margin: 18px 0 0;
+    }
+
+    .visual-card {
+      background: linear-gradient(145deg, #ffffff, #fff0bd);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      min-height: 320px;
+      box-shadow: var(--shadow);
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .visual-card::before,
+    .visual-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(79, 143, 58, 0.12);
+    }
+
+    .visual-card::before {
+      width: 220px;
+      height: 220px;
+      right: -60px;
+      top: -50px;
+    }
+
+    .visual-card::after {
+      width: 160px;
+      height: 160px;
+      left: -40px;
+      bottom: -40px;
+    }
+
+    .etrog-icon {
+      font-size: 120px;
+      filter: drop-shadow(0 18px 22px rgba(87, 58, 0, 0.18));
+      z-index: 1;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(-3deg); }
+      50% { transform: translateY(-14px) rotate(3deg); }
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h2 {
+      margin: 0 0 16px;
+      font-size: 24px;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin: 18px 0 8px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 13px 14px;
+      font-size: 16px;
+      background: #fffdf8;
+      color: var(--text);
+      outline: none;
+    }
+
+    textarea {
+      min-height: 96px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(245, 166, 35, 0.16);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    button {
+      border: none;
+      border-radius: 16px;
+      padding: 13px 18px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .primary {
+      background: var(--primary);
+      color: #1f1600;
+    }
+
+    .primary:hover {
+      background: #ffbc3d;
+      transform: translateY(-1px);
+    }
+
+    .secondary {
+      background: #eef6e9;
+      color: var(--green);
+      border: 1px solid #cfe5c2;
+    }
+
+    .secondary:hover {
+      background: #e2f1da;
+    }
+
+    .output-box {
+      background: #101828;
+      color: #f9fafb;
+      border-radius: 20px;
+      padding: 18px;
+      min-height: 180px;
+      white-space: pre-wrap;
+      line-height: 1.75;
+      direction: ltr;
+      text-align: left;
+      font-family: Consolas, monospace;
+      overflow: auto;
+    }
+
+    .tips {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .tip {
+      background: #fffdf8;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .tip strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #7a4d00;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .placeholder {
+      min-height: 150px;
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at center, #f7d65f 0 18%, transparent 19%),
+        linear-gradient(145deg, #fff5cd, #f4f9ed);
+      border: 1px dashed #d8c595;
+      display: grid;
+      place-items: center;
+      color: #8a6a19;
+      text-align: center;
+      padding: 12px;
+      font-weight: 700;
+    }
+
+    .mini-note {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-top: 12px;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      margin-top: 32px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 850px) {
+      header,
+      .grid,
+      .tips,
+      .gallery,
+      .row {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header>
+      <section class="hero">
+        <div class="badge">🍋 LoRA Concept Studio</div>
+        <h1>סטודיו אתרוגים AI</h1>
+        <p>
+          כלי קטן ונקי ליצירת פרומפטים חזקים לאימון או הפעלה של מודל תמונות בסגנון אתרוגים:
+          אתרוגים מהודרים, קופסאות אתרוג, אווירת חג, חסידי, ריאליסטי, תלת-ממד ועוד.
+        </p>
+      </section>
+
+      <section class="visual-card" aria-label="איור אתרוג">
+        <div class="etrog-icon">🍋</div>
+      </section>
+    </header>
+
+    <section class="grid">
+      <form class="card" id="promptForm">
+        <h2>בניית פרומפט</h2>
+
+        <label for="subject">מה האובייקט המרכזי?</label>
+        <input id="subject" value="beautiful kosher etrog" />
+
+        <div class="row">
+          <div>
+            <label for="style">סגנון</label>
+            <select id="style">
+              <option value="ultra realistic product photography">צילום מוצר ריאליסטי</option>
+              <option value="warm hasidic jewish illustration">איור חסידי חמים</option>
+              <option value="luxury 3D render">תלת-ממד יוקרתי</option>
+              <option value="cinematic holiday scene">סצנה קולנועית לחג</option>
+              <option value="minimal clean poster design">פוסטר נקי ומינימליסטי</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="mood">אווירה</label>
+            <select id="mood">
+              <option value="holy, calm, elegant, festive">קדושה, רוגע וחגיגיות</option>
+              <option value="joyful, bright, family oriented">שמחה ומשפחתיות</option>
+              <option value="premium, clean, boutique">יוקרתי ובוטיקי</option>
+              <option value="nostalgic, warm, traditional">מסורתי ונוסטלגי</option>
+            </select>
+          </div>
+        </div>
+
+        <label for="details">פרטים חשובים</label>
+        <textarea id="details">yellow etrog with natural texture, green leaves, elegant etrog box, soft golden light, Jewish holiday atmosphere</textarea>
+
+        <label for="avoid">מה לא לכלול?</label>
+        <textarea id="avoid">text, watermark, low quality, blurry, extra fruit, distorted hands, damaged etrog</textarea>
+
+        <div class="btns">
+          <button type="submit" class="primary">צור פרומפט</button>
+          <button type="button" class="secondary" id="copyBtn">העתק</button>
+          <button type="button" class="secondary" id="clearBtn">נקה</button>
+        </div>
+
+        <p class="mini-note">
+          הערה: זה יוצר פרומפט מוכן. כדי ליצור תמונות בפועל צריך לחבר API של מודל תמונות כמו Replicate, Fal, HuggingFace או שרת Stable Diffusion/Flux.
+        </p>
+      </form>
+
+      <section class="card">
+        <h2>הפרומפט שנוצר</h2>
+        <div class="output-box" id="output">לחץ על "צור פרומפט" כדי להתחיל.</div>
+
+        <div class="tips">
+          <div class="tip">
+            <strong>לאימון LoRA</strong>
+            15-30 תמונות איכותיות של אותו רעיון עדיפות על הרבה תמונות חלשות.
+          </div>
+          <div class="tip">
+            <strong>שם טריגר</strong>
+            השתמש במילה ייחודית כמו etrogpatlas כדי שהמודל יזהה את הקונספט.
+          </div>
+          <div class="tip">
+            <strong>אחידות</strong>
+            שמור על תאורה, רקע וזוויות מגוונות אבל לא מבולגנות מדי.
+          </div>
+        </div>
+
+        <h2 style="margin-top: 26px;">גלריית רעיונות</h2>
+        <div class="gallery">
+          <div class="placeholder">אתרוג מהודר<br />צילום מוצר</div>
+          <div class="placeholder">קופסת אתרוג<br />יוקרתית</div>
+          <div class="placeholder">סצנת חג<br />אור זהוב</div>
+        </div>
+      </section>
+    </section>
+
+    <footer>
+      נבנה כבסיס ראשוני למוצר אתרוגים מבוסס AI ו-LoRA.
+    </footer>
+  </main>
+
+  <script>
+    const form = document.getElementById("promptForm");
+    const output = document.getElementById("output");
+    const copyBtn = document.getElementById("copyBtn");
+    const clearBtn = document.getElementById("clearBtn");
+
+    function buildPrompt() {
+      const subject = document.getElementById("subject").value.trim();
+      const style = document.getElementById("style").value;
+      const mood = document.getElementById("mood").value;
+      const details = document.getElementById("details").value.trim();
+      const avoid = document.getElementById("avoid").value.trim();
+
+      const trigger = "etrogpatlas";
+
+      return `PROMPT:\n${trigger}, ${subject}, ${style}, ${mood}, ${details}, highly detailed, sharp focus, professional composition, beautiful lighting\n\nNEGATIVE PROMPT:\n${avoid}\n\nSUGGESTED SETTINGS:\nModel: SDXL / Flux LoRA\nAspect Ratio: 1:1 or 4:5\nSteps: 28-40\nGuidance: 4-7\nLoRA Strength: 0.7-1.0`;
+    }
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      output.textContent = buildPrompt();
+    });
+
+    copyBtn.addEventListener("click", async function () {
+      const text = output.textContent;
+      if (!text || text.includes("לחץ על")) return;
+
+      try {
+        await navigator.clipboard.writeText(text);
+        copyBtn.textContent = "הועתק ✓";
+        setTimeout(() => copyBtn.textContent = "העתק", 1300);
+      } catch (error) {
+        alert("לא הצלחתי להעתיק אוטומטית. אפשר לסמן ולהעתיק ידנית.");
+      }
+    });
+
+    clearBtn.addEventListener("click", function () {
+      output.textContent = 'לחץ על "צור פרומפט" כדי להתחיל.';
+      form.reset();
+      document.getElementById("subject").value = "beautiful kosher etrog";
+      document.getElementById("details").value = "yellow etrog with natural texture, green leaves, elegant etrog box, soft golden light, Jewish holiday atmosphere";
+      document.getElementById("avoid").value = "text, watermark, low quality, blurry, extra fruit, distorted hands, damaged etrog";
+    });
+  </script>
+</body>
+</html>
